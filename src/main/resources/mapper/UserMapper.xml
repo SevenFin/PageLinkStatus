@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.status.dao.IUserDao" >
+
+    <select id="selectUser" resultType="com.status.model.User" >
+        select userid, username, password, roleid
+        from page_links_user.user
+        where username = #{username} and password = #{password}
+    </select>
+
+    <select id="selectAllVendor" resultType="com.status.model.Vendor" >
+        SELECT vendor
+        from page_links_user.vendor
+    </select>
+
+    <select id="selectVendorByUser" resultType="com.status.model.Vendor" >
+        select v.vendor from page_links_user.user_vendor uv , page_links_user.vendor v
+        where userid=#{userId} and uv.vendorid = v.vendorid
+    </select>
+
+</mapper>

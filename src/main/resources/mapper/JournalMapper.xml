@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.status.dao.IJournalDao">
+
+    <select id="queryByYear" resultType="com.status.model.ResultSingle">
+        select I_State,I_Code,count(*) as countSingle
+        from page_links.${schemaName}
+        where S_Vendor=#{vendor} and I_Type=#{type} ${condition}
+        GROUP BY I_State,I_Code
+    </select>
+
+    <select id="queryJinfo" resultType="com.status.model.ResultSingle">
+        select I_State,count(*) as countSingle
+        from page_links.${schemaName}
+        where S_Vendor=#{vendor} and I_Type=#{type} ${condition}
+        GROUP BY I_State
+    </select>
+
+    <update id="updateState">
+         update page_links.${schemaName} set I_State = #{stateTo}
+         where S_Vendor=#{vendor} and I_Type=#{type} ${stateCondition} ${condition} ${yearCondition}
+    </update>
+
+    <update id="updateJinfo">
+         update page_links.${schemaName} set I_State = #{stateTo}
+         where S_Vendor=#{vendor} and I_Type=#{type} ${stateCondition} ${condition}
+    </update>
+
+</mapper>
